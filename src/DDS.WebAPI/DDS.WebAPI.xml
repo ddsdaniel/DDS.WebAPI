@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DDS.WebAPI</name>
+    </assembly>
+    <members>
+        <member name="T:DDS.WebAPI.Abstractions.Controllers.CrudController`3">
+            <summary>
+            Controller que provê as implementações genéricas para métodos de CRUD das outras entidades
+            </summary>
+            <typeparam name="TViewModelCadastro">View model com os dados necessários para o cadastro</typeparam>
+            <typeparam name="TViewModelConsulta">View model com os dados que podem ser exibidos no front</typeparam>
+            <typeparam name="TEntity">Entidade do domínio</typeparam>
+        </member>
+        <member name="M:DDS.WebAPI.Abstractions.Controllers.CrudController`3.#ctor(DDS.Domain.Core.Abstractions.Services.ICrudService{`2},AutoMapper.IMapper)">
+            <summary>
+            Construtor com parâmetros passados a partir da base concreta
+            </summary>
+            <param name="crudService">Serviço para validação e manipulação da entidade</param>
+            /// <param name="mapper">Automapper</param>
+        </member>
+        <member name="M:DDS.WebAPI.Abstractions.Controllers.CrudController`3.ConsultarTodos">
+            <summary>
+            Consulta todos os registros do repositório
+            </summary>
+            <returns>Lista de registros (view model)</returns>
+        </member>
+        <member name="M:DDS.WebAPI.Abstractions.Controllers.CrudController`3.Pesquisar(System.String)">
+            <summary>
+            Pesquisa sobre os registros do repositório
+            </summary>
+            <param name="filtro">Filtro inserido pelo usuário</param>
+            <returns>Lista de registros correspondentes ao filtro</returns>
+        </member>
+        <member name="M:DDS.WebAPI.Abstractions.Controllers.CrudController`3.ConsultarPorId(System.Guid)">
+            <summary>
+            Consulta um registro no repositório
+            </summary>
+            <returns>View model de consulta</returns>
+        </member>
+        <member name="M:DDS.WebAPI.Abstractions.Controllers.CrudController`3.Delete(System.Guid)">
+            <summary>
+            Exclui uma entidade do repositório
+            </summary>
+            <param name="id">Id da entidade que será excluída</param>
+            <returns></returns>
+        </member>
+        <member name="M:DDS.WebAPI.Abstractions.Controllers.CrudController`3.Post(`0)">
+            <summary>
+            Cadastra a entidade no repositório
+            </summary>
+            <param name="novaEntidadeViewModel">Dados da nova entidade</param>
+            <returns>Id da entidade recém cadastrada</returns>
+        </member>
+        <member name="M:DDS.WebAPI.Abstractions.Controllers.CrudController`3.Put(System.Guid,`0)">
+            <summary>
+            Altera os dados de uma entidade do repositório
+            </summary>
+            <param name="id">Id da entidade que será alterada</param>
+            <param name="viewModelCadastro">Dados que serão alterados</param>
+            <returns>OK (201)</returns>
+        </member>
+        <member name="M:DDS.WebAPI.Abstractions.Controllers.CrudController`3.Ordenar(System.Collections.Generic.ICollection{`1})">
+            <summary>
+            Método abstrato, no qual cada controller implementa a ordenação de forma customizada
+            </summary>
+            <param name="lista">Lista a ser ordenada</param>
+            <returns>Lista já ordenada</returns>
+        </member>
+        <member name="T:DDS.WebAPI.Abstractions.Controllers.GenericController">
+            <summary>
+            Controller genérica que possui métodos úteis à outras controllers. Todas as controllers do sistema deve herdar desta
+            </summary>
+        </member>
+        <member name="M:DDS.WebAPI.Abstractions.Controllers.GenericController.CustomNotFound(System.String,System.String)">
+            <summary>
+            Monta um retorno de not found com um conteúdo formatado como uma lista de notificações, para ficar compatível com o padrão de retorno de erros do sistema
+            </summary>
+            <param name="property">Nome da propriedade do erro</param>
+            <param name="message">Mensagem de erro</param>
+            <returns>NotFoundObjectResult com uma lista de notificações de apenas um registro, o qual foi passado por parâmetro</returns>
+        </member>
+        <member name="M:DDS.WebAPI.Abstractions.Controllers.GenericController.CustomBadRequest(System.String,System.String)">
+            <summary>
+            Monta um retorno de bad request com um conteúdo formatado como uma lista de notificações, para ficar compatível com o padrão de retorno de erros do sistema
+            </summary>
+            <param name="property">Nome da propriedade do erro</param>
+            <param name="message">Mensagem de erro</param>
+            <returns>BadRequestObjectResult com uma lista de notificações de apenas um registro, o qual foi passado por parâmetro</returns>
+        </member>
+        <member name="T:DDS.WebAPI.Abstractions.ViewModels.IViewModel">
+            <summary>
+            Interface a qual todas as view models devem implementar
+            </summary>
+        </member>
+        <member name="T:DDS.WebAPI.Models.ViewModels.FiltroViewModel">
+            <summary>
+            Classe usada para filtros em CRUDs
+            </summary>
+        </member>
+        <member name="P:DDS.WebAPI.Models.ViewModels.FiltroViewModel.Filtro">
+            <summary>
+            Filtro inserido pelo usuário
+            </summary>
+        </member>
+        <member name="T:DDS.WebAPI.Models.ViewModels.StringContainerViewModel">
+            <summary>
+            Classe que serve para enviar uma string por post
+            </summary>
+        </member>
+        <member name="P:DDS.WebAPI.Models.ViewModels.StringContainerViewModel.Texto">
+            <summary>
+            Texto a ser enviado
+            </summary>
+        </member>
+    </members>
+</doc>

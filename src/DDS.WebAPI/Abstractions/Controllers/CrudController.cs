@@ -23,7 +23,7 @@ namespace DDS.WebAPI.Abstractions.Controllers
     {
 
         private readonly ICrudService<TEntity> _crudService;
-        private readonly IMapper _mapper;
+        protected readonly IMapper _mapper;
 
 
         /// <summary>
@@ -49,7 +49,27 @@ namespace DDS.WebAPI.Abstractions.Controllers
         {
             var lista = _crudService.ConsultarTodos();
 
-            var listaViewModel = _mapper.Map<List<TViewModelConsulta>>(lista);
+            var listaViewModel = _mapper.Map<ICollection<TViewModelConsulta>>(lista);
+
+            listaViewModel = Ordenar(listaViewModel);
+
+            return Ok(listaViewModel);
+        }
+
+        /// <summary>
+        /// Pesquisa sobre os registros do repositório
+        /// </summary>
+        /// <param name="filtro">Filtro inserido pelo usuário</param>
+        /// <returns>Lista de registros correspondentes ao filtro</returns>
+        [HttpGet("pesquisa")]
+        [ProducesResponseType(typeof(ICollection<IViewModel>), StatusCodes.Status200OK)]
+        public virtual ActionResult<ICollection<TViewModelCadastro>> Pesquisar([FromQuery] string filtro)
+        {
+            var lista = _crudService.Pesquisar(filtro);
+            
+            var listaViewModel = _mapper.Map<ICollection<TViewModelConsulta>>(lista);
+
+            listaViewModel = Ordenar(listaViewModel);
 
             return Ok(listaViewModel);
         }
@@ -61,9 +81,9 @@ namespace DDS.WebAPI.Abstractions.Controllers
         [HttpGet("{id:guid}")]
         [ProducesResponseType(typeof(IViewModel), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(List<Notification>), StatusCodes.Status404NotFound)]
-        public virtual ActionResult<ICollection<TViewModelCadastro>> ConsultarPorId(Guid id)
+        public virtual async Task<ActionResult<TViewModelCadastro>> ConsultarPorId(Guid id)
         {
-            var entidade = _crudService.ConsultarPorId(id);
+            var entidade = await _crudService.ConsultarPorId(id);
 
             if (entidade == null)
                 return CustomNotFound(nameof(id), "Registro não encontrado");
@@ -150,5 +170,12 @@ namespace DDS.WebAPI.Abstractions.Controllers
 
             return Ok();
         }
+
+        /// <summary>
+        /// Método abstrato, no qual cada controller implementa a ordenação de forma customizada
+        /// </summary>
+        /// <param name="lista">Lista a ser ordenada</param>
+        /// <returns>Lista já ordenada</returns>
+        protected abstract ICollection<TViewModelConsulta> Ordenar(ICollection<TViewModelConsulta> lista);
     }
 }
