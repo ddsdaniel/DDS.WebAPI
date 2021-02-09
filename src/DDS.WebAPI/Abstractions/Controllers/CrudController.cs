@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using DDS.Domain.Core.Abstractions.Model.Entities;
+using DDS.Domain.Core.Abstractions.Models.Entities;
 using DDS.Domain.Core.Abstractions.Services;
 using DDS.WebAPI.Abstractions.ViewModels;
 using Flunt.Notifications;
