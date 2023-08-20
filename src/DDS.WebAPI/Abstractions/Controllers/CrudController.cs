@@ -44,12 +44,12 @@ namespace DDS.WebAPI.Abstractions.Controllers
         /// </summary>
         /// <returns>Lista de registros (view model)</returns>
         [HttpGet]
-        [ProducesResponseType(typeof(ICollection<IViewModel>), StatusCodes.Status200OK)]
-        public virtual ActionResult<ICollection<TViewModelCadastro>> ConsultarTodos()
+        [ProducesResponseType(typeof(IEnumerable<IViewModel>), StatusCodes.Status200OK)]
+        public virtual ActionResult<IEnumerable<TViewModelCadastro>> ConsultarTodos()
         {
             var lista = _crudService.ConsultarTodos();
 
-            var listaViewModel = _mapper.Map<ICollection<TViewModelConsulta>>(lista);
+            var listaViewModel = _mapper.Map<IEnumerable<TViewModelConsulta>>(lista);
 
             listaViewModel = Ordenar(listaViewModel);
 
@@ -62,12 +62,12 @@ namespace DDS.WebAPI.Abstractions.Controllers
         /// <param name="filtro">Filtro inserido pelo usuário</param>
         /// <returns>Lista de registros correspondentes ao filtro</returns>
         [HttpGet("pesquisa")]
-        [ProducesResponseType(typeof(ICollection<IViewModel>), StatusCodes.Status200OK)]
-        public virtual ActionResult<ICollection<TViewModelCadastro>> Pesquisar([FromQuery] string filtro)
+        [ProducesResponseType(typeof(IEnumerable<IViewModel>), StatusCodes.Status200OK)]
+        public virtual ActionResult<IEnumerable<TViewModelCadastro>> Pesquisar([FromQuery] string filtro)
         {
             var lista = _crudService.Pesquisar(filtro);
             
-            var listaViewModel = _mapper.Map<ICollection<TViewModelConsulta>>(lista);
+            var listaViewModel = _mapper.Map<IEnumerable<TViewModelConsulta>>(lista);
 
             listaViewModel = Ordenar(listaViewModel);
 
@@ -176,6 +176,6 @@ namespace DDS.WebAPI.Abstractions.Controllers
         /// </summary>
         /// <param name="lista">Lista a ser ordenada</param>
         /// <returns>Lista já ordenada</returns>
-        protected abstract ICollection<TViewModelConsulta> Ordenar(ICollection<TViewModelConsulta> lista);
+        protected abstract IEnumerable<TViewModelConsulta> Ordenar(IEnumerable<TViewModelConsulta> lista);
     }
 }

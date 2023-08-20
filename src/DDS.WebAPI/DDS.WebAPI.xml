@@ -60,7 +60,7 @@
             <param name="viewModelCadastro">Dados que serão alterados</param>
             <returns>OK (201)</returns>
         </member>
-        <member name="M:DDS.WebAPI.Abstractions.Controllers.CrudController`3.Ordenar(System.Collections.Generic.ICollection{`1})">
+        <member name="M:DDS.WebAPI.Abstractions.Controllers.CrudController`3.Ordenar(System.Collections.Generic.IEnumerable{`1})">
             <summary>
             Método abstrato, no qual cada controller implementa a ordenação de forma customizada
             </summary>
